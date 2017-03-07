@@ -14,7 +14,7 @@
 		F552AFB21E642EDB007E73C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F552AFB01E642EDB007E73C0 /* LaunchScreen.storyboard */; };
 		F552AFBD1E642EDB007E73C0 /* myProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F552AFBC1E642EDB007E73C0 /* myProjectTests.swift */; };
 		F552AFC81E642EDB007E73C0 /* myProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F552AFC71E642EDB007E73C0 /* myProjectUITests.swift */; };
-		F552AFD61E66BE93007E73C0 /* VCPage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F552AFD51E66BE93007E73C0 /* VCPage1.swift */; };
+		F5AAEBF11E6ECDFE00501401 /* msOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AAEBF01E6ECDFE00501401 /* msOption.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +48,7 @@
 		F552AFC31E642EDB007E73C0 /* myProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F552AFC71E642EDB007E73C0 /* myProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myProjectUITests.swift; sourceTree = "<group>"; };
 		F552AFC91E642EDB007E73C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F552AFD51E66BE93007E73C0 /* VCPage1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCPage1.swift; sourceTree = "<group>"; };
+		F5AAEBF01E6ECDFE00501401 /* msOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = msOption.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +102,7 @@
 				F552AFA71E642EDB007E73C0 /* AppDelegate.swift */,
 				F552AFA91E642EDB007E73C0 /* ViewController.swift */,
 				F552AFAB1E642EDB007E73C0 /* Main.storyboard */,
-				F552AFD51E66BE93007E73C0 /* VCPage1.swift */,
+				F5AAEBF01E6ECDFE00501401 /* msOption.swift */,
 				F552AFAE1E642EDB007E73C0 /* Assets.xcassets */,
 				F552AFB01E642EDB007E73C0 /* LaunchScreen.storyboard */,
 				F552AFB31E642EDB007E73C0 /* Info.plist */,
@@ -263,8 +263,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F552AFAA1E642EDB007E73C0 /* ViewController.swift in Sources */,
+				F5AAEBF11E6ECDFE00501401 /* msOption.swift in Sources */,
 				F552AFA81E642EDB007E73C0 /* AppDelegate.swift in Sources */,
-				F552AFD61E66BE93007E73C0 /* VCPage1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +509,7 @@
 				F552AFCE1E642EDB007E73C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F552AFCF1E642EDB007E73C0 /* Build configuration list for PBXNativeTarget "myProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +518,7 @@
 				F552AFD11E642EDB007E73C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F552AFD21E642EDB007E73C0 /* Build configuration list for PBXNativeTarget "myProjectUITests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +527,7 @@
 				F552AFD41E642EDB007E73C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
