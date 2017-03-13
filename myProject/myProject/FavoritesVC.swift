@@ -1,5 +1,5 @@
 //
-//  optionVC.swift
+//  FavoritesVC.swift
 //  myProject
 //
 //  Created by student05 on 11.03.17.
@@ -8,10 +8,11 @@
 
 import UIKit
 
-class optionVC: UITableViewController {
+class FavoritesVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
     }
 

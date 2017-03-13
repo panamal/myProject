@@ -8,73 +8,55 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
-    @IBAction func btnExit(_ sender: UIButton) {
+class ViewController: UITableViewController {
+    
+    @IBAction func btnExit(_ sender: UIBarButtonItem) {
         let alertMessage = UIAlertController(title: "Attention!", message: "Do you want to exit the programm?", preferredStyle: UIAlertControllerStyle.alert)
-        alertMessage.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        let alertActionOk = UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: {
+            (action:UIAlertAction!) -> Void in exit(0)
+        })
+        alertMessage.addAction(alertActionOk)
         alertMessage.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alertMessage, animated: true, completion: nil)
         
-        
     }
-    
-    @IBOutlet weak var msgAddress: UITextField!
-    
+
+    @IBOutlet weak var txtAddress: UITextField!
+    @IBOutlet weak var btnFavorites: UIButton!
+    @IBOutlet weak var btnAllUser: UIButton!
+    @IBOutlet weak var txtMessage: UITextView!
+    @IBOutlet weak var txtFileName1: UITextField!
+    @IBOutlet weak var txtFileName2: UITextField!
+    @IBOutlet weak var txtFileName3: UITextField!
+    @IBOutlet weak var btnAddFile1: UIButton!
+    @IBOutlet weak var btnAddFile2: UIButton!
+    @IBOutlet weak var btnAddFile3: UIButton!
     @IBOutlet weak var btnSend: UIButton!
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var btnAlarm: UIButton!
     
-    @IBOutlet weak var msgText: UITextView!
-    
-    @IBOutlet weak var fileName1: UITextField!
-    @IBOutlet weak var fileName2: UITextField!
-    @IBOutlet weak var fileName3: UITextField!
-    
-    @IBAction func typeExit(_ sender: UIButton) {
-        
-
-    }
-    
-    
-    @IBAction func addFileName(_ sender: UIButton) {
-        
-        //let dialog = FileManager()
-        
-        //let diag = UIAlertController()
-
-        
-    }
-    
-    
-    
-    @IBAction func btnCancelClick(_ sender: UIButton) {
-    }
-    
-    var shadowSwitch = true
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        msgAddress.layer.borderWidth = 1
-        msgAddress.layer.borderColor = UIColor.gray.cgColor
-        msgAddress.layer.cornerRadius = 5
+        txtAddress.layer.borderWidth = 1
+        txtAddress.layer.borderColor = UIColor.gray.cgColor
+        txtAddress.layer.cornerRadius = 5
         
-        msgText.layer.borderWidth = 1
-        msgText.layer.borderColor = UIColor.gray.cgColor
-        msgText.layer.cornerRadius = 5
-
-        fileName1.layer.borderWidth = 1
-        fileName1.layer.borderColor = UIColor.gray.cgColor
-        fileName1.layer.cornerRadius = 5
+        txtMessage.layer.borderWidth = 1
+        txtMessage.layer.borderColor = UIColor.gray.cgColor
+        txtMessage.layer.cornerRadius = 5
         
-        fileName2.layer.borderWidth = 1
-        fileName2.layer.borderColor = UIColor.gray.cgColor
-        fileName2.layer.cornerRadius = 5
+        txtFileName1.layer.borderWidth = 1
+        txtFileName1.layer.borderColor = UIColor.gray.cgColor
+        txtFileName1.layer.cornerRadius = 5
         
-        fileName3.layer.borderWidth = 1
-        fileName3.layer.borderColor = UIColor.gray.cgColor
-        fileName3.layer.cornerRadius = 5
+        txtFileName2.layer.borderWidth = 1
+        txtFileName2.layer.borderColor = UIColor.gray.cgColor
+        txtFileName2.layer.cornerRadius = 5
+        
+        txtFileName3.layer.borderWidth = 1
+        txtFileName3.layer.borderColor = UIColor.gray.cgColor
+        txtFileName3.layer.cornerRadius = 5
         
         btnSend.layer.cornerRadius = btnSend.bounds.height / 3
         btnSend.layer.borderColor = UIColor.green.cgColor
@@ -87,7 +69,7 @@ class ViewController: UIViewController {
         btnAlarm.layer.cornerRadius = btnAlarm.bounds.height / 3
         btnAlarm.layer.borderColor = UIColor.red.cgColor
         btnAlarm.layer.borderWidth = 2.0
-
+        
     }
 
     override func didReceiveMemoryWarning() {
