@@ -58,15 +58,15 @@ class ViewController: UITableViewController {
         txtFileName3.layer.borderColor = UIColor.gray.cgColor
         txtFileName3.layer.cornerRadius = 5
         
-        btnSend.layer.cornerRadius = btnSend.bounds.height / 3
+        btnSend.layer.cornerRadius = btnSend.bounds.height / 5
         btnSend.layer.borderColor = UIColor.green.cgColor
         btnSend.layer.borderWidth = 2.0
         
-        btnCancel.layer.cornerRadius = btnCancel.bounds.height / 3
+        btnCancel.layer.cornerRadius = btnCancel.bounds.height / 5
         btnCancel.layer.borderColor = UIColor.yellow.cgColor
         btnCancel.layer.borderWidth = 2.0
         
-        btnAlarm.layer.cornerRadius = btnAlarm.bounds.height / 3
+        btnAlarm.layer.cornerRadius = btnAlarm.bounds.height / 5
         btnAlarm.layer.borderColor = UIColor.red.cgColor
         btnAlarm.layer.borderWidth = 2.0
         

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F550D4EC1E77C95000F8FBA5 /* FirstFormVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550D4EB1E77C95000F8FBA5 /* FirstFormVC.swift */; };
 		F552AFA81E642EDB007E73C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F552AFA71E642EDB007E73C0 /* AppDelegate.swift */; };
 		F552AFAA1E642EDB007E73C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F552AFA91E642EDB007E73C0 /* ViewController.swift */; };
 		F552AFAD1E642EDB007E73C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F552AFAB1E642EDB007E73C0 /* Main.storyboard */; };
@@ -14,9 +15,7 @@
 		F552AFB21E642EDB007E73C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F552AFB01E642EDB007E73C0 /* LaunchScreen.storyboard */; };
 		F552AFBD1E642EDB007E73C0 /* myProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F552AFBC1E642EDB007E73C0 /* myProjectTests.swift */; };
 		F552AFC81E642EDB007E73C0 /* myProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F552AFC71E642EDB007E73C0 /* myProjectUITests.swift */; };
-		F5A7CAFA1E74A7B9003ED765 /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A7CAF91E74A7B9003ED765 /* FavoritesVC.swift */; };
 		F5AAEBF51E74114000501401 /* optionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AAEBF41E74114000501401 /* optionVC.swift */; };
-		F5FE85571E76893800E61DC6 /* FirstFormTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FE85561E76893800E61DC6 /* FirstFormTVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F550D4EB1E77C95000F8FBA5 /* FirstFormVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstFormVC.swift; sourceTree = "<group>"; };
 		F552AFA41E642EDA007E73C0 /* myProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F552AFA71E642EDB007E73C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F552AFA91E642EDB007E73C0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,9 +50,7 @@
 		F552AFC31E642EDB007E73C0 /* myProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F552AFC71E642EDB007E73C0 /* myProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myProjectUITests.swift; sourceTree = "<group>"; };
 		F552AFC91E642EDB007E73C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F5A7CAF91E74A7B9003ED765 /* FavoritesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
 		F5AAEBF41E74114000501401 /* optionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = optionVC.swift; sourceTree = "<group>"; };
-		F5FE85561E76893800E61DC6 /* FirstFormTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstFormTVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,9 +103,8 @@
 			children = (
 				F552AFA71E642EDB007E73C0 /* AppDelegate.swift */,
 				F552AFA91E642EDB007E73C0 /* ViewController.swift */,
+				F550D4EB1E77C95000F8FBA5 /* FirstFormVC.swift */,
 				F552AFAB1E642EDB007E73C0 /* Main.storyboard */,
-				F5FE85561E76893800E61DC6 /* FirstFormTVC.swift */,
-				F5A7CAF91E74A7B9003ED765 /* FavoritesVC.swift */,
 				F5AAEBF41E74114000501401 /* optionVC.swift */,
 				F552AFAE1E642EDB007E73C0 /* Assets.xcassets */,
 				F552AFB01E642EDB007E73C0 /* LaunchScreen.storyboard */,
@@ -268,9 +265,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5A7CAFA1E74A7B9003ED765 /* FavoritesVC.swift in Sources */,
-				F5FE85571E76893800E61DC6 /* FirstFormTVC.swift in Sources */,
 				F5AAEBF51E74114000501401 /* optionVC.swift in Sources */,
+				F550D4EC1E77C95000F8FBA5 /* FirstFormVC.swift in Sources */,
 				F552AFAA1E642EDB007E73C0 /* ViewController.swift in Sources */,
 				F552AFA81E642EDB007E73C0 /* AppDelegate.swift in Sources */,
 			);
