@@ -9,6 +9,11 @@
 import UIKit
 
 class optionVC: UITableViewController {
+    
+    var varServAddress = ""
+    var varUserNick = ""
+    var varUserName = ""
+    var varUserPhone = ""
 
     @IBOutlet weak var lblIdentifier: UILabel!
     @IBOutlet weak var txtServer: UITextField!
@@ -35,47 +40,74 @@ class optionVC: UITableViewController {
     }
     
     @IBAction func btnServConnType(_ sender: UIButton) {
+        let servConnect = Int(arc4random() % 2) == 0 ? false : true
         if btnServConn.tag == 0 {
-            //*******************
-            // connect to server
-            //*******************
-            let servConnect = Int(arc4random() % 2) == 0 ? false : true
-            //*******************
-            if servConnect {
-                btnServConn.tag = 1
-                btnServConn.setTitleColor(UIColor.green, for: .normal)
-                btnServConn.setTitle("Ok!", for: .normal)
+            let serverAddress = txtServer.text ?? ""
+            if serverAddress.characters.count > 0 {
+                //*******************
+                // connect to server
+                //*******************
+                if servConnect {
+                    varServAddress = serverAddress
+                    txtServer.isEnabled = false
+                    btnServConn.tag = 1
+                    btnServConn.setTitleColor(UIColor.green, for: UIControlState.normal)
+                    btnServConn.setTitle("Ok!", for: UIControlState.normal)
+                } else {
+                    btnServConn.tag = 0
+                    btnServConn.setTitleColor(UIColor.red, for: .normal)
+                    btnServConn.setTitle("No connection!", for: .normal)
+                    btnCheckUser.setTitleColor(UIColor.white, for: .normal)
+                    btnCheckUser.setTitle("Check", for: UIControlState.normal)
+                }
             } else {
-                btnServConn.tag = 0
-                btnServConn.setTitleColor(UIColor.red, for: .normal)
-                btnServConn.setTitle("No connection!", for: .normal)
-                btnCheckUser.setTitleColor(UIColor.white, for: .normal)
-                btnCheckUser.setTitle("Check", for: UIControlState.normal)
+                myAlert(myTitle: "Empty value", myMessage: "Please input server address!")
             }
         }
     }
     
     @IBAction func btnCheckUserType(_ sender: UIButton) {
+        let userCheck = Int(arc4random() % 2) == 0 ? false : true
         if btnServConn.tag == 1 {
             if btnCheckUser.tag == 0 {
-                //*********************
-                // check user nickname
-                //*********************
-                let userCheck = Int(arc4random() % 2) == 0 ? false : true
-                //*********************
-                if userCheck { //
-                    btnCheckUser.tag = 1
-                    btnCheckUser.setTitleColor(UIColor.red, for: .normal)
-                    btnCheckUser.setTitle("Save", for: UIControlState.normal)
+                let userNick = txtUserNick.text ?? ""
+                let userName = txtUserName.text ?? ""
+                let userPhone = txtUserPhone.text ?? ""
+                if userNick.characters.count * userName.characters.count * userPhone.characters.count > 0 {
+                    //*********************
+                    // check user nickname
+                    //*********************
+                    if userCheck {
+                        varUserNick = userNick
+                        varUserName = userName
+                        varUserPhone = userPhone
+                        btnCheckUser.tag = 1
+                        btnCheckUser.setTitleColor(UIColor.red, for: .normal)
+                        btnCheckUser.setTitle("Save", for: UIControlState.normal)
+                    } else {
+                        btnCheckUser.tag = 0
+                        btnCheckUser.setTitleColor(UIColor.red, for: .normal)
+                        btnCheckUser.setTitle("Select another nickname", for: UIControlState.normal)
+                    }
                 } else {
-                    btnCheckUser.tag = 0
-                    btnCheckUser.setTitleColor(UIColor.red, for: .normal)
-                    btnCheckUser.setTitle("Select another nickname", for: UIControlState.normal)
+                    myAlert(myTitle: "Empty value", myMessage: "The 'User Nickname', 'User Name' and 'User Phone number' fields must be filled in!")
                 }
             } else if btnCheckUser.tag == 1 {
+                txtUserNick.text = varUserNick
+                txtUserName.text = varUserName
+                txtUserPhone.text = varUserPhone
+                txtUserNick.isEnabled = false
+                txtUserName.isEnabled = false
+                txtUserPhone.isEnabled = false
                 btnCheckUser.tag = 2
                 btnCheckUser.setTitleColor(UIColor.green, for: .normal)
                 btnCheckUser.setTitle("Ok!", for: .normal)
+                // search Document directory
+                let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+                let documentsDirectory = paths[0] as String
+                let filename = documentsDirectory.appending("theFile.txt")
+                //stringByAppendingPathComponent("theFile.txt")
+                
             }
         }
     }
@@ -98,6 +130,11 @@ class optionVC: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func myAlert(myTitle: String, myMessage: String){
+        let alertMessage = UIAlertController(title: myTitle, message: myMessage, preferredStyle: UIAlertControllerStyle.alert)
+        alertMessage.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertMessage, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
