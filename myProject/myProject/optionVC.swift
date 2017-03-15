@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FMDB
+
 
 class optionVC: UITableViewController {
     
@@ -102,11 +104,22 @@ class optionVC: UITableViewController {
                 btnCheckUser.tag = 2
                 btnCheckUser.setTitleColor(UIColor.green, for: .normal)
                 btnCheckUser.setTitle("Ok!", for: .normal)
+                
                 // search Document directory
-                let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-                let documentsDirectory = paths[0] as String
-                let filename = documentsDirectory.appending("theFile.txt")
-                //stringByAppendingPathComponent("theFile.txt")
+                //let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+                //let documentsDirectory = paths[0] as String
+                //let filename = documentsDirectory.appending("theFile.txt")
+                //var database:OpaquePointer? = nil
+                let documents = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                let fileURL = documents.appendingPathComponent("option.sqlite") //URLByAppendingPathComponent("test.sqlite")
+                
+                let database = FMDatabase(path: fileURL.path)
+                
+                if !(database?.open())! {
+                    print("Unable to open database")
+                    return
+                }
+                
                 
             }
         }
