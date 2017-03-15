@@ -12,10 +12,40 @@ import FMDB
 
 class optionVC: UITableViewController {
     
-    var varServAddress = ""
-    var varUserNick = ""
-    var varUserName = ""
-    var varUserPhone = ""
+    class optData {
+        private var srvAdr = ""
+        private var usrNick = ""
+        private var usrName = ""
+        private var usrPhone = ""
+        private var usrAvtr:UIImage
+        
+        func setAdr(adr: String){self.srvAdr = adr}
+        func setNick(nick: String){self.usrNick = nick}
+        func setName(name: String){self.usrName = name}
+        func setPhone(phone: String){self.usrPhone = phone}
+        func setAvatar(avatar: UIImage){self.usrAvtr = avatar}
+        
+        func getAdr()->String{return self.srvAdr}
+        func getNick()->String{return self.usrNick}
+        func getName()->String{return self.usrName}
+        func getPhone()->String{return self.usrPhone}
+        func getAvatar()->UIImage{return self.usrAvtr}
+        
+        init() {
+            srvAdr = ""
+            usrNick = ""
+            usrName = ""
+            usrPhone = ""
+            usrAvtr = UIImage()
+        }
+    }
+    
+    let myOption:optData = optData()
+    
+    //var varServAddress = ""
+    //var varUserNick = ""
+    //var varUserName = ""
+    //var varUserPhone = ""
 
     @IBOutlet weak var lblIdentifier: UILabel!
     @IBOutlet weak var txtServer: UITextField!
@@ -50,7 +80,7 @@ class optionVC: UITableViewController {
                 // connect to server
                 //*******************
                 if servConnect {
-                    varServAddress = serverAddress
+                    myOption.setAdr(adr: serverAddress)
                     txtServer.isEnabled = false
                     btnServConn.tag = 1
                     btnServConn.setTitleColor(UIColor.green, for: UIControlState.normal)
@@ -75,14 +105,16 @@ class optionVC: UITableViewController {
                 let userNick = txtUserNick.text ?? ""
                 let userName = txtUserName.text ?? ""
                 let userPhone = txtUserPhone.text ?? ""
+                let userAvatar = imgUserAvatar.image ?? UIImage()
                 if userNick.characters.count * userName.characters.count * userPhone.characters.count > 0 {
                     //*********************
                     // check user nickname
                     //*********************
                     if userCheck {
-                        varUserNick = userNick
-                        varUserName = userName
-                        varUserPhone = userPhone
+                        myOption.setNick(nick: userNick)
+                        myOption.setName(name: userName)
+                        myOption.setPhone(phone: userPhone)
+                        myOption.setAvatar(avatar: userAvatar)
                         btnCheckUser.tag = 1
                         btnCheckUser.setTitleColor(UIColor.red, for: .normal)
                         btnCheckUser.setTitle("Save", for: UIControlState.normal)
@@ -95,9 +127,10 @@ class optionVC: UITableViewController {
                     myAlert(myTitle: "Empty value", myMessage: "The 'User Nickname', 'User Name' and 'User Phone number' fields must be filled in!")
                 }
             } else if btnCheckUser.tag == 1 {
-                txtUserNick.text = varUserNick
-                txtUserName.text = varUserName
-                txtUserPhone.text = varUserPhone
+                txtUserNick.text = myOption.getNick()
+                txtUserName.text = myOption.getName()
+                txtUserPhone.text = myOption.getPhone()
+                imgUserAvatar.image = myOption.getAvatar()
                 txtUserNick.isEnabled = false
                 txtUserName.isEnabled = false
                 txtUserPhone.isEnabled = false
@@ -111,16 +144,30 @@ class optionVC: UITableViewController {
                 //let filename = documentsDirectory.appending("theFile.txt")
                 //var database:OpaquePointer? = nil
                 let documents = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                let fileURL = documents.appendingPathComponent("option.sqlite") //URLByAppendingPathComponent("test.sqlite")
-                
+                let fileURL = documents.appendingPathComponent("option.sqlite")
                 let database = FMDatabase(path: fileURL.path)
                 
                 if !(database?.open())! {
                     print("Unable to open database")
                     return
+                } else {
+                    print("Database is open")
+                    do {
+                        
+                        var strSQL = "drop table OPTIONS"
+                        try database?.executeQuery(strSQL, values: nil)
+                        
+                        strSQL = "create table if not exists OPTIONS (ID integer primaty key auto_increment, SRV text, UNICK text, UNAME text, UPHONE text, UAVATAR blob)"
+                        try database?.executeUpdate(strSQL, values: nil)
+                        
+                        strSQL = "insert or replace into OPTIONS (SRV, UNICK, UNAME, UPHONE, UAVATAR) values (?, ?, ?, ?, ?)"
+                        try database?.executeUpdate(strSQL, values: [myOption.getAdr(), myOption.getNick(), myOption.getName(), myOption.getPhone(), myOption.getAvatar()])
+ 
+                    } catch let error as NSError {
+                        print("failed: \(error.localizedDescription)")
+                    }
+                    database?.close()
                 }
-                
-                
             }
         }
     }
@@ -136,6 +183,39 @@ class optionVC: UITableViewController {
         btnServConn.setTitleColor(UIColor.white, for: .normal)
         btnServConn.setTitle("Apply", for: UIControlState.normal)
         // Do any additional setup after loading the view.
+        
+        let documents = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        let fileURL = documents.appendingPathComponent("option.sqlite")
+        let database = FMDatabase(path: fileURL.path)
+        
+        if !(database?.open())! {
+            print("Unable to open database")
+            return
+        } else {
+            print("Database is open")
+            do {
+                var strSQL = "create table if not exists OPTIONS (ID integer primaty key auto_increment, SRV text, UNICK text, UNAME text, UPHONE text, UAVATAR png)"
+                try database?.executeUpdate(strSQL, values: nil)
+                /*
+                //strSQL = "insert into options (SRV, UNICK, UNAME, UPHONE, UAVATAR) values (?, ?, ?, ?, ?)"
+                //try database?.executeUpdate(strSQL, values: [varServAddress, varUserNick, varUserName, varUserPhone, imgUserAvatar.image as Any])
+                */
+                strSQL = "select SRV, UNICK, UNAME, UPHONE, UAVATAR from OPTIONS"
+                let rs = try database?.executeQuery(strSQL, values: nil)
+                while (rs?.next())! {
+                    txtServer.text = rs?.string(forColumn: "SRV") ?? ""
+                    txtUserNick.text = rs?.string(forColumn: "UNICK") ?? ""
+                    txtUserName.text = rs?.string(forColumn: "UNAME") ?? ""
+                    txtUserPhone.text = rs?.string(forColumn: "UPHONE") ?? ""
+                    //imgUserAvatar.image = rs?.object(forColumnName: "UAVATAR") as? UIImage
+                    //imgUserAvatar.image = rs?.object(forColumnName: "UAVATAR") as! UIImage!
+                }
+            } catch let error as NSError {
+                print("failed: \(error.localizedDescription)")
+            }
+            database?.close()
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
