@@ -21,22 +21,34 @@ class ViewController: UITableViewController {
         
     }
 
+
+    
     @IBOutlet weak var txtAddress: UITextField!
     @IBOutlet weak var btnFavorites: UIButton!
     @IBOutlet weak var btnAllUser: UIButton!
     @IBOutlet weak var txtMessage: UITextView!
-    @IBOutlet weak var txtFileName1: UITextField!
-    @IBOutlet weak var txtFileName2: UITextField!
-    @IBOutlet weak var txtFileName3: UITextField!
-    @IBOutlet weak var btnAddFile1: UIButton!
-    @IBOutlet weak var btnAddFile2: UIButton!
-    @IBOutlet weak var btnAddFile3: UIButton!
+
     @IBOutlet weak var btnSend: UIButton!
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var btnAlarm: UIButton!
+    @IBOutlet weak var cellBtn: UITableViewCell!
+    @IBOutlet weak var cell1: UITableViewCell!
+    @IBOutlet weak var cell2: UITableViewCell!
+    @IBOutlet weak var cell3: UITableViewCell!
+    //@IBOutlet weak var cell4: UITableViewCell!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.backgroundColor = UIColor(patternImage: UIImage(named: "imgBack.jpg")!)
+        cell1.backgroundColor = self.tableView.backgroundColor
+        cell2.backgroundColor = self.tableView.backgroundColor
+        cell3.backgroundColor = self.tableView.backgroundColor
+        //cell4.backgroundColor = self.tableView.backgroundColor
+        cellBtn.backgroundColor = self.tableView.backgroundColor
+        btnFavorites.tintColor = UIColor.white
+        btnAllUser.tintColor = UIColor.white
         
         txtAddress.layer.borderWidth = 1
         txtAddress.layer.borderColor = UIColor.gray.cgColor
@@ -46,27 +58,22 @@ class ViewController: UITableViewController {
         txtMessage.layer.borderColor = UIColor.gray.cgColor
         txtMessage.layer.cornerRadius = 5
         
-        txtFileName1.layer.borderWidth = 1
-        txtFileName1.layer.borderColor = UIColor.gray.cgColor
-        txtFileName1.layer.cornerRadius = 5
+
         
-        txtFileName2.layer.borderWidth = 1
-        txtFileName2.layer.borderColor = UIColor.gray.cgColor
-        txtFileName2.layer.cornerRadius = 5
+        //txtFileName2.layer.borderWidth = 1
+        //txtFileName2.layer.borderColor = UIColor.gray.cgColor
+        //txtFileName2.layer.cornerRadius = 5
         
-        txtFileName3.layer.borderWidth = 1
-        txtFileName3.layer.borderColor = UIColor.gray.cgColor
-        txtFileName3.layer.cornerRadius = 5
-        
-        btnSend.layer.cornerRadius = btnSend.bounds.height / 5
-        btnSend.layer.borderColor = UIColor.green.cgColor
+        btnSend.layer.cornerRadius = btnSend.bounds.height / 2
+        btnSend.layer.borderColor = UIColor.white.cgColor
         btnSend.layer.borderWidth = 2.0
         
-        btnCancel.layer.cornerRadius = btnCancel.bounds.height / 5
-        btnCancel.layer.borderColor = UIColor.yellow.cgColor
+        btnCancel.layer.cornerRadius = btnCancel.bounds.height / 2
+        btnCancel.layer.borderColor = UIColor.blue.cgColor
         btnCancel.layer.borderWidth = 2.0
         
-        btnAlarm.layer.cornerRadius = btnAlarm.bounds.height / 5
+        btnAlarm.layer.cornerRadius = btnAlarm.bounds.height / 2
+        //btnAlarm.layer.cornerRadius = 35
         btnAlarm.layer.borderColor = UIColor.red.cgColor
         btnAlarm.layer.borderWidth = 2.0
         
