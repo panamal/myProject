@@ -14,18 +14,21 @@ class optionVC: UITableViewController {
     
     class optData {
         private var srvAdr = ""
+        private var devId = ""
         private var usrNick = ""
         private var usrName = ""
         private var usrPhone = ""
         private var usrAvtr:UIImage
         
         func setAdr(adr: String){self.srvAdr = adr}
+        func setDId(did: String){self.devId = did}
         func setNick(nick: String){self.usrNick = nick}
         func setName(name: String){self.usrName = name}
         func setPhone(phone: String){self.usrPhone = phone}
         func setAvatar(avatar: UIImage){self.usrAvtr = avatar}
         
         func getAdr()->String{return self.srvAdr}
+        func getDId()->String{return self.devId}
         func getNick()->String{return self.usrNick}
         func getName()->String{return self.usrName}
         func getPhone()->String{return self.usrPhone}
@@ -33,6 +36,7 @@ class optionVC: UITableViewController {
         
         init() {
             srvAdr = ""
+            devId = ""
             usrNick = ""
             usrName = ""
             usrPhone = ""
@@ -42,11 +46,6 @@ class optionVC: UITableViewController {
     
     let myOption:optData = optData()
     
-    //var varServAddress = ""
-    //var varUserNick = ""
-    //var varUserName = ""
-    //var varUserPhone = ""
-
     @IBOutlet weak var lblIdentifier: UILabel!
     @IBOutlet weak var txtServer: UITextField!
     @IBOutlet weak var txtUserNick: UITextField!
@@ -55,6 +54,10 @@ class optionVC: UITableViewController {
     @IBOutlet weak var imgUserAvatar: UIImageView!
     @IBOutlet weak var btnCheckUser: UIButton!
     @IBOutlet weak var btnServConn: UIButton!
+    
+    @IBAction func textFieldDoneEditing(sender: UITextField) {
+        sender.resignFirstResponder()
+    }  
     
     @IBAction func ifServerEdit(_ sender: UITextField) {
         btnServConn.setTitleColor(UIColor.white, for: .normal)
@@ -72,12 +75,12 @@ class optionVC: UITableViewController {
     }
     
     @IBAction func btnServConnType(_ sender: UIButton) {
-        let servConnect = Int(arc4random() % 2) == 0 ? false : true
         if btnServConn.tag == 0 {
+            let servConnect = Int(arc4random() % 2) == 0 ? false : true
             let serverAddress = txtServer.text ?? ""
             if serverAddress.characters.count > 0 {
                 //*******************
-                // connect to server
+                // connect to server & get device ID
                 //*******************
                 if servConnect {
                     myOption.setAdr(adr: serverAddress)
@@ -144,24 +147,25 @@ class optionVC: UITableViewController {
                 //let filename = documentsDirectory.appending("theFile.txt")
                 //var database:OpaquePointer? = nil
                 let documents = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                let fileURL = documents.appendingPathComponent("option.sqlite")
+                let fileURL = documents.appendingPathComponent("option.db")
                 let database = FMDatabase(path: fileURL.path)
                 
                 if !(database?.open())! {
-                    print("Unable to open database")
+                    //print("Unable to open database")
                     return
                 } else {
-                    print("Database is open")
+                    //print("Database is open")
                     do {
-                        
-                        var strSQL = "drop table OPTIONS"
+                        var strSQL = "drop table SETTINGS"
                         try database?.executeQuery(strSQL, values: nil)
                         
-                        strSQL = "create table if not exists OPTIONS (ID integer primaty key auto_increment, SRV text, UNICK text, UNAME text, UPHONE text, UAVATAR blob)"
+                        strSQL = "create table if not exists SETTINGS (ID integer primaty key auto_increment, DEVID text, SRVADR text, UNICK text, UNAME text, UPHONE text, UAVATAR data)"
                         try database?.executeUpdate(strSQL, values: nil)
-                        
-                        strSQL = "insert or replace into OPTIONS (SRV, UNICK, UNAME, UPHONE, UAVATAR) values (?, ?, ?, ?, ?)"
-                        try database?.executeUpdate(strSQL, values: [myOption.getAdr(), myOption.getNick(), myOption.getName(), myOption.getPhone(), myOption.getAvatar()])
+                        // Server must generate or reading 'devid'
+                        let devid = "000000000000000000"
+                        // ****************
+                        strSQL = "insert or replace into SETTINGS (DEVID, SRVADR, UNICK, UNAME, UPHONE, UAVATAR) values (?, ?, ?, ?, ?, ?)"
+                        try database?.executeUpdate(strSQL, values: [devid, myOption.getAdr(), myOption.getNick(), myOption.getName(), myOption.getPhone(), myOption.getAvatar()])
  
                     } catch let error as NSError {
                         print("failed: \(error.localizedDescription)")
@@ -185,25 +189,25 @@ class optionVC: UITableViewController {
         // Do any additional setup after loading the view.
         
         let documents = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let fileURL = documents.appendingPathComponent("option.sqlite")
+        let fileURL = documents.appendingPathComponent("option.db")
         let database = FMDatabase(path: fileURL.path)
         
         if !(database?.open())! {
-            print("Unable to open database")
+            //print("Unable to open database")
             return
         } else {
-            print("Database is open")
+            //print("Database is open")
             do {
-                var strSQL = "create table if not exists OPTIONS (ID integer primaty key auto_increment, SRV text, UNICK text, UNAME text, UPHONE text, UAVATAR png)"
+                var strSQL = "create table if not exists SETTINGS (ID integer primaty key auto_increment, DEVID text, SRVADR text, UNICK text, UNAME text, UPHONE text, UAVATAR data)"
                 try database?.executeUpdate(strSQL, values: nil)
                 /*
                 //strSQL = "insert into options (SRV, UNICK, UNAME, UPHONE, UAVATAR) values (?, ?, ?, ?, ?)"
                 //try database?.executeUpdate(strSQL, values: [varServAddress, varUserNick, varUserName, varUserPhone, imgUserAvatar.image as Any])
                 */
-                strSQL = "select SRV, UNICK, UNAME, UPHONE, UAVATAR from OPTIONS"
+                strSQL = "select DEVID, SRVADR, UNICK, UNAME, UPHONE, UAVATAR from SETTINGS"
                 let rs = try database?.executeQuery(strSQL, values: nil)
                 while (rs?.next())! {
-                    txtServer.text = rs?.string(forColumn: "SRV") ?? ""
+                    txtServer.text = rs?.string(forColumn: "SRVADR") ?? ""
                     txtUserNick.text = rs?.string(forColumn: "UNICK") ?? ""
                     txtUserName.text = rs?.string(forColumn: "UNAME") ?? ""
                     txtUserPhone.text = rs?.string(forColumn: "UPHONE") ?? ""
@@ -217,6 +221,7 @@ class optionVC: UITableViewController {
         }
 
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
