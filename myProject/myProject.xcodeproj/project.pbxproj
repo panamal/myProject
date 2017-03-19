@@ -15,10 +15,8 @@
 		F552AFAD1E642EDB007E73C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F552AFAB1E642EDB007E73C0 /* Main.storyboard */; };
 		F552AFAF1E642EDB007E73C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F552AFAE1E642EDB007E73C0 /* Assets.xcassets */; };
 		F552AFB21E642EDB007E73C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F552AFB01E642EDB007E73C0 /* LaunchScreen.storyboard */; };
-		F552AFBD1E642EDB007E73C0 /* myProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F552AFBC1E642EDB007E73C0 /* myProjectTests.swift */; };
-		F552AFC81E642EDB007E73C0 /* myProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F552AFC71E642EDB007E73C0 /* myProjectUITests.swift */; };
-		F55ACABC1E7ACD8C00871048 /* PhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55ACABB1E7ACD8C00871048 /* PhotoVC.swift */; };
 		F55ACAC01E7C617600871048 /* MyParentClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55ACABF1E7C617600871048 /* MyParentClass.swift */; };
+		F55ACAC21E7EFCC300871048 /* myCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55ACAC11E7EFCC300871048 /* myCameraViewController.swift */; };
 		F5AAEBF51E74114000501401 /* optionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AAEBF41E74114000501401 /* optionVC.swift */; };
 		F619C312849177BE0438FA37 /* Pods_myProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F48C16DB48D41FBFA122D2 /* Pods_myProject.framework */; };
 /* End PBXBuildFile section */
@@ -59,13 +57,9 @@
 		F552AFB11E642EDB007E73C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F552AFB31E642EDB007E73C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F552AFB81E642EDB007E73C0 /* myProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F552AFBC1E642EDB007E73C0 /* myProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myProjectTests.swift; sourceTree = "<group>"; };
-		F552AFBE1E642EDB007E73C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F552AFC31E642EDB007E73C0 /* myProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F552AFC71E642EDB007E73C0 /* myProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myProjectUITests.swift; sourceTree = "<group>"; };
-		F552AFC91E642EDB007E73C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F55ACABB1E7ACD8C00871048 /* PhotoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoVC.swift; sourceTree = "<group>"; };
 		F55ACABF1E7C617600871048 /* MyParentClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyParentClass.swift; sourceTree = "<group>"; };
+		F55ACAC11E7EFCC300871048 /* myCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCameraViewController.swift; sourceTree = "<group>"; };
 		F5AAEBF41E74114000501401 /* optionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = optionVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,8 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				F552AFA61E642EDA007E73C0 /* myProject */,
-				F552AFBB1E642EDB007E73C0 /* myProjectTests */,
-				F552AFC61E642EDB007E73C0 /* myProjectUITests */,
 				F552AFA51E642EDA007E73C0 /* Products */,
 				A78855D05B6B9D5852315B67 /* Pods */,
 				A43DB47DCB5A690E12D48C27 /* Frameworks */,
@@ -149,32 +141,14 @@
 				F552AFA91E642EDB007E73C0 /* ViewController.swift */,
 				F550D4EB1E77C95000F8FBA5 /* FirstFormVC.swift */,
 				F552AFAB1E642EDB007E73C0 /* Main.storyboard */,
-				F55ACABB1E7ACD8C00871048 /* PhotoVC.swift */,
 				F5AAEBF41E74114000501401 /* optionVC.swift */,
 				F552AFAE1E642EDB007E73C0 /* Assets.xcassets */,
 				F552AFB01E642EDB007E73C0 /* LaunchScreen.storyboard */,
 				F552AFB31E642EDB007E73C0 /* Info.plist */,
 				F55ACABF1E7C617600871048 /* MyParentClass.swift */,
+				F55ACAC11E7EFCC300871048 /* myCameraViewController.swift */,
 			);
 			path = myProject;
-			sourceTree = "<group>";
-		};
-		F552AFBB1E642EDB007E73C0 /* myProjectTests */ = {
-			isa = PBXGroup;
-			children = (
-				F552AFBC1E642EDB007E73C0 /* myProjectTests.swift */,
-				F552AFBE1E642EDB007E73C0 /* Info.plist */,
-			);
-			path = myProjectTests;
-			sourceTree = "<group>";
-		};
-		F552AFC61E642EDB007E73C0 /* myProjectUITests */ = {
-			isa = PBXGroup;
-			children = (
-				F552AFC71E642EDB007E73C0 /* myProjectUITests.swift */,
-				F552AFC91E642EDB007E73C0 /* Info.plist */,
-			);
-			path = myProjectUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -459,10 +433,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5AAEBF51E74114000501401 /* optionVC.swift in Sources */,
+				F55ACAC21E7EFCC300871048 /* myCameraViewController.swift in Sources */,
 				F550D4EC1E77C95000F8FBA5 /* FirstFormVC.swift in Sources */,
 				F55ACAC01E7C617600871048 /* MyParentClass.swift in Sources */,
 				F552AFAA1E642EDB007E73C0 /* ViewController.swift in Sources */,
-				F55ACABC1E7ACD8C00871048 /* PhotoVC.swift in Sources */,
 				F552AFA81E642EDB007E73C0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,7 +445,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F552AFBD1E642EDB007E73C0 /* myProjectTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,7 +452,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F552AFC81E642EDB007E73C0 /* myProjectUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

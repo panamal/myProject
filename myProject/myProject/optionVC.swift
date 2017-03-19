@@ -18,21 +18,21 @@ class optionVC: UITableViewController {
         private var usrNick = ""
         private var usrName = ""
         private var usrPhone = ""
-        private var usrAvtr:UIImage
+        private var usrAvtr = Data()
         
         func setAdr(adr: String){self.srvAdr = adr}
         func setDId(did: String){self.devId = did}
         func setNick(nick: String){self.usrNick = nick}
         func setName(name: String){self.usrName = name}
         func setPhone(phone: String){self.usrPhone = phone}
-        func setAvatar(avatar: UIImage){self.usrAvtr = avatar}
+        func setAvatar(avatar: UIImage){self.usrAvtr = UIImagePNGRepresentation(avatar)!}
         
         func getAdr()->String{return self.srvAdr}
         func getDId()->String{return self.devId}
         func getNick()->String{return self.usrNick}
         func getName()->String{return self.usrName}
         func getPhone()->String{return self.usrPhone}
-        func getAvatar()->UIImage{return self.usrAvtr}
+        func getAvatar()->UIImage{return UIImage(data:self.usrAvtr,scale:1.0)!}
         
         init() {
             srvAdr = ""
@@ -40,7 +40,7 @@ class optionVC: UITableViewController {
             usrNick = ""
             usrName = ""
             usrPhone = ""
-            usrAvtr = UIImage()
+            usrAvtr = Data()
         }
     }
     
@@ -155,18 +155,20 @@ class optionVC: UITableViewController {
                     return
                 } else {
                     //print("Database is open")
+                    var strSQL = ""
                     do {
-                        var strSQL = "drop table SETTINGS"
-                        try database?.executeQuery(strSQL, values: nil)
-                        
-                        strSQL = "create table if not exists SETTINGS (ID integer primaty key auto_increment, DEVID text, SRVADR text, UNICK text, UNAME text, UPHONE text, UAVATAR data)"
+                        strSQL = "drop table SETTINGS"
                         try database?.executeUpdate(strSQL, values: nil)
+                        
+                        strSQL = "create table if not exists SETTINGS (DEVID text, SRVADR text, UNICK text, UNAME text, UPHONE text, UAVATAR data)"
+                        try database?.executeUpdate(strSQL, values: nil)
+                        
                         // Server must generate or reading 'devid'
-                        let devid = "000000000000000000"
+                        myOption.setDId(did: "1111111111111111")
                         // ****************
+                        
                         strSQL = "insert or replace into SETTINGS (DEVID, SRVADR, UNICK, UNAME, UPHONE, UAVATAR) values (?, ?, ?, ?, ?, ?)"
-                        try database?.executeUpdate(strSQL, values: [devid, myOption.getAdr(), myOption.getNick(), myOption.getName(), myOption.getPhone(), myOption.getAvatar()])
- 
+                        try database?.executeUpdate(strSQL, values: [myOption.getDId(), myOption.getAdr(), myOption.getNick(), myOption.getName(), myOption.getPhone(), myOption.getAvatar()])
                     } catch let error as NSError {
                         print("failed: \(error.localizedDescription)")
                     }
@@ -181,12 +183,10 @@ class optionVC: UITableViewController {
         let deviceID = UIDevice.current.identifierForVendor
         lblIdentifier.text = "Your ID: " + deviceID!.uuidString
         
-        //self.tableView.headerView(forSection: 1)?.backgroundColor = UIColor.blue
         btnCheckUser.setTitleColor(UIColor.white, for: .normal)
         btnCheckUser.setTitle("Check", for: UIControlState.normal)
         btnServConn.setTitleColor(UIColor.white, for: .normal)
         btnServConn.setTitle("Apply", for: UIControlState.normal)
-        // Do any additional setup after loading the view.
         
         let documents = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         let fileURL = documents.appendingPathComponent("option.db")
@@ -198,19 +198,27 @@ class optionVC: UITableViewController {
         } else {
             //print("Database is open")
             do {
-                var strSQL = "create table if not exists SETTINGS (ID integer primaty key auto_increment, DEVID text, SRVADR text, UNICK text, UNAME text, UPHONE text, UAVATAR data)"
+                var strSQL = "create table if not exists SETTINGS (DEVID text, SRVADR text, UNICK text, UNAME text, UPHONE text, UAVATAR data)"
                 try database?.executeUpdate(strSQL, values: nil)
-                /*
-                //strSQL = "insert into options (SRV, UNICK, UNAME, UPHONE, UAVATAR) values (?, ?, ?, ?, ?)"
-                //try database?.executeUpdate(strSQL, values: [varServAddress, varUserNick, varUserName, varUserPhone, imgUserAvatar.image as Any])
-                */
-                strSQL = "select DEVID, SRVADR, UNICK, UNAME, UPHONE, UAVATAR from SETTINGS"
+                strSQL = "select * from SETTINGS"
                 let rs = try database?.executeQuery(strSQL, values: nil)
+                var i = 0
                 while (rs?.next())! {
                     txtServer.text = rs?.string(forColumn: "SRVADR") ?? ""
                     txtUserNick.text = rs?.string(forColumn: "UNICK") ?? ""
                     txtUserName.text = rs?.string(forColumn: "UNAME") ?? ""
                     txtUserPhone.text = rs?.string(forColumn: "UPHONE") ?? ""
+
+                    i += 1
+                    if rs?.data(forColumn: "UAVATAR") != nil {
+                        print(String(i) + " :not nil image")
+                        let imgData = rs?.data(forColumn: "UAVATAR") ?? Data()
+                        let image : UIImage = UIImage(data: imgData,scale:1.0) ?? UIImage()
+                        imgUserAvatar.image = image
+                    } else {
+                        print(String(i) + " :nil image")
+                    }
+                    
                     //imgUserAvatar.image = rs?.object(forColumnName: "UAVATAR") as? UIImage
                     //imgUserAvatar.image = rs?.object(forColumnName: "UAVATAR") as! UIImage!
                 }
