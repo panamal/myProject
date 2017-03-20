@@ -45,5 +45,7 @@
 	<string></string>
 	<key>NSCameraUsageDescription</key>
 	<string></string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Send your position when alarm mode</string>
 </dict>
 </plist>

@@ -8,6 +8,9 @@
 
 import UIKit
 import FMDB
+import MediaPlayer
+import MobileCoreServices
+import CoreLocation
 
 class ConnectToServer {
     private var imai = ""
@@ -37,12 +40,10 @@ class ConnectToServer {
         if (database?.open())! {
             var strSQL = ""
             do {
-                //database?.beginTransaction()
-                strSQL = "drop table SETTINGS"
-                try database?.executeUpdate(strSQL, values: nil)
-                //database?.commit()
+                //strSQL = "drop table SETTINGS"
+                //try database?.executeUpdate(strSQL, values: nil)
+
                 // create table if not exists
-                //strSQL = "create table if not exists SETTINGS (ID integer primaty key auto_increment, DEVID text, SRVADR text, UNICK text, UNAME text, UPHONE text, UAVATAR data)"
                 strSQL = "create table if not exists SETTINGS (DEVID text, SRVADR text, UNICK text, UNAME text, UPHONE text, UAVATAR data)"
                 try database?.executeUpdate(strSQL, values: nil)
                 
@@ -56,7 +57,6 @@ class ConnectToServer {
                     self.username = rs?.string(forColumn: "UNAME") ?? ""
                     self.userphone = rs?.string(forColumn: "UPHONE") ?? ""
                     self.useravatar = rs?.data(forColumn: "UAVATAR") ?? Data()
-                    
                 }
                 if doCheckSocked() {
                     let chDev = doCheckDevice()
@@ -71,7 +71,7 @@ class ConnectToServer {
                     } else {self.errmessage = "Current imai end device ID not supported"}
                 } else {self.errmessage = "Current server not available"}
                 strSQL = "insert or replace into SETTINGS (DEVID, SRVADR, UNICK, UNAME, UPHONE, UAVATAR) values (?, ?, ?, ?, ?, ?)"
-                print(self.devid + "|" + self.servaddr + "|" + self.usernick + "|" + self.username + "|" + self.userphone)
+                //print(self.devid + "|" + self.servaddr + "|" + self.usernick + "|" + self.username + "|" + self.userphone)
                 try database?.executeUpdate(strSQL, values: [self.devid, self.servaddr, self.usernick, self.username, self.userphone, self.useravatar])
                 database?.close()
             } catch let error as NSError {
@@ -133,8 +133,40 @@ class ConnectToServer {
 }
 
 var connectToServer = ConnectToServer()
+//var moviePlayerController:MPMoviePlayerController?
+var image:UIImage?
+var movieURL:NSURL?
+var lastChosenMediaType:String?
+var currentImage = 0
 
-class ViewController: UITableViewController {
+class MyLocation {
+    private var locationManager:CLLocationManager?
+    private var currentPoint:CLLocation?
+    private var previousPoint:CLLocation?
+    private var totalMovementDistance:CLLocationDistance = 0
+
+    func getLocManager()->CLLocationManager {
+        return self.locationManager!
+    }
+    
+    
+    
+    init () {
+        self.locationManager = CLLocationManager()
+    }
+}
+
+//let myLocation = MyLocation()
+
+class ViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
+    
+    private var locationManager = CLLocationManager()
+    private var currentPoint:CLLocation?
+    private var previousPoint:CLLocation?
+    private var totalMovementDistance:CLLocationDistance = 0
+
+    @IBOutlet var latitudeLabel:UILabel!
+    @IBOutlet var longitudeLabel:UILabel!
 
     @IBAction func btnExit(_ sender: UIBarButtonItem) {
         let alertMessage = UIAlertController(title: "Attention!", message: "Do you want to exit the programm?", preferredStyle: UIAlertControllerStyle.alert)
@@ -193,21 +225,25 @@ class ViewController: UITableViewController {
     }
     
     @IBAction func fotoBtnType(_ sender: UIButton) {
+        //var imgSource = 0
+        currentImage = sender.tag
         if sender.tag == 1 {
-            //img1.image = UIImage()
-            //img1.tag = 0
+            img1.tag = 1
             fotoBtnLeft.isHidden = true
             clrButtonLeft.isHidden = false
         } else if sender.tag == 2 {
-            //img2.image = UIImage()
-            //img2.tag = 0
+            img2.tag = 1
             fotoBtnCenter.isHidden = true
             clrButtonCenter.isHidden = false
         } else {
-            //img3.image = UIImage()
-            //img3.tag = 0
+            img3.tag = 1
             fotoBtnRight.isHidden = true
             clrButtonRight.isHidden = false
+        }
+        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
+            pickMediaFromSource(sourceType: UIImagePickerControllerSourceType.photoLibrary)
+        } else {
+            pickMediaFromSource(sourceType: UIImagePickerControllerSourceType.camera)
         }
     }
     
@@ -231,15 +267,85 @@ class ViewController: UITableViewController {
     @IBAction func btnSendType(_ sender: UIButton) {
         if connectToServer.getConn() {
             
+        } else {
+            let alertMessage = UIAlertController(title: "Connection failed", message: connectToServer.getErr(), preferredStyle: UIAlertControllerStyle.alert)
+            let alertActionOk = UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: nil)
+            alertMessage.addAction(alertActionOk)
+            self.present(alertMessage, animated: true, completion: nil)
+            lblStatus.backgroundColor = UIColor.red
+            lblStatus.text = "No connection!"
+            lblStatus.tag = 0
         }
     }
+    
+    @IBAction func btnAlarmType(_ sender: UIButton) {
+        // ************************************************
+        //let locationManager =
+        let positionString = "( " + latitudeLabel.text! + "; " + longitudeLabel.text! + " )"
+        let alertMessage = UIAlertController(title: "ALARM", message: "Position: " + positionString + " Send ALARM message?", preferredStyle: UIAlertControllerStyle.alert)
+        let alertActionOk = UIAlertAction(title: "ALARM", style: UIAlertActionStyle.destructive, handler: nil)
+        alertMessage.addAction(alertActionOk)
+        let alertActionCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+        alertMessage.addAction(alertActionCancel)
+        self.present(alertMessage, animated: true, completion: nil)
+        /*
+        if connectToServer.getConn() {
+            
+        } else {
+            let alertMessage = UIAlertController(title: "Connection failed", message: connectToServer.getErr(), preferredStyle: UIAlertControllerStyle.alert)
+            let alertActionOk = UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: nil)
+            alertMessage.addAction(alertActionOk)
+            self.present(alertMessage, animated: true, completion: nil)
+            lblStatus.backgroundColor = UIColor.red
+            lblStatus.text = "No connection!"
+            lblStatus.tag = 0
+        }
+        */
+    }
+
     
     @IBAction func textFieldDoneEditing(sender: UITextField) {
         sender.resignFirstResponder()
     }
     
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus){
+        print("Autorization status changed to \(status.rawValue)")
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        default:
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        //let errorType = error.code == CLError.denied.rawValue ? "Access Denied!":"Error: \(error.code)"
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let newLocation = locations[locations.count - 1]
+        let latitudeString = String(format: "%g\u{00B0}", newLocation.coordinate.latitude)
+        latitudeLabel.text = latitudeString
+        let longitudeString = String(format: "%g\u{00B0}", newLocation.coordinate.longitude)
+        longitudeLabel.text = longitudeString
+        if newLocation.horizontalAccuracy < 0 {return}
+        if newLocation.horizontalAccuracy > 100 || newLocation.verticalAccuracy > 50 {return}
+        if previousPoint == nil {
+            totalMovementDistance = 0
+        } else {
+            totalMovementDistance += newLocation.distance(from: previousPoint!)
+        }
+        previousPoint = newLocation
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
         
         //let connectToServer = ConnectToServer()
         /*
@@ -302,7 +408,17 @@ class ViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(Bool.init())
+        if image != nil {
+            if currentImage == 1 {
+                img1.image = (image != nil) ? image! : UIImage()
+            } else if currentImage == 2 {
+                img2.image = (image != nil) ? image! : UIImage()
+            } else if currentImage == 3 {
+                img3.image = (image != nil) ? image! : UIImage()
+            }
+        }
         
+
         if connectToServer.checkConn() {
             lblStatus.backgroundColor = UIColor.green
             lblStatus.text = "Connection established!"
@@ -322,7 +438,41 @@ class ViewController: UITableViewController {
         super.didReceiveMemoryWarning()
 
     }
-
-
+    
+    func pickMediaFromSource(sourceType: UIImagePickerControllerSourceType){
+        let mediaTypes = UIImagePickerController.availableMediaTypes(for: sourceType)!
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) && mediaTypes.count > 0 {
+            let picker = UIImagePickerController()
+            picker.mediaTypes = mediaTypes
+            picker.delegate = self
+            picker.allowsEditing = true
+            picker.sourceType = sourceType
+            present(picker, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(title: "Error accessing media", message: "Unsupported media source", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+            
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        lastChosenMediaType = info[UIImagePickerControllerMediaType] as? String!
+        if let mediaType = lastChosenMediaType {
+            if mediaType == (kUTTypeImage as NSString) as String {
+                image = info[UIImagePickerControllerEditedImage] as? UIImage
+            } else if mediaType == (kUTTypeMovie as NSString) as String {
+                movieURL = info[UIImagePickerControllerMediaURL] as? NSURL
+            }
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+        
+    }
+    
 }
 
