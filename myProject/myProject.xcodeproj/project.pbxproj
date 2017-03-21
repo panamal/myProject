@@ -17,6 +17,7 @@
 		F552AFB21E642EDB007E73C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F552AFB01E642EDB007E73C0 /* LaunchScreen.storyboard */; };
 		F55ACAC01E7C617600871048 /* MyParentClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55ACABF1E7C617600871048 /* MyParentClass.swift */; };
 		F5AAEBF51E74114000501401 /* optionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AAEBF41E74114000501401 /* optionVC.swift */; };
+		F5C682A61E812580006877EF /* optionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C682A51E812580006877EF /* optionTableViewController.swift */; };
 		F619C312849177BE0438FA37 /* Pods_myProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F48C16DB48D41FBFA122D2 /* Pods_myProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		F552AFC31E642EDB007E73C0 /* myProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F55ACABF1E7C617600871048 /* MyParentClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyParentClass.swift; sourceTree = "<group>"; };
 		F5AAEBF41E74114000501401 /* optionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = optionVC.swift; sourceTree = "<group>"; };
+		F5C682A51E812580006877EF /* optionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = optionTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				F550D4EB1E77C95000F8FBA5 /* FirstFormVC.swift */,
 				F552AFAB1E642EDB007E73C0 /* Main.storyboard */,
 				F5AAEBF41E74114000501401 /* optionVC.swift */,
+				F5C682A51E812580006877EF /* optionTableViewController.swift */,
 				F552AFAE1E642EDB007E73C0 /* Assets.xcassets */,
 				F552AFB01E642EDB007E73C0 /* LaunchScreen.storyboard */,
 				F552AFB31E642EDB007E73C0 /* Info.plist */,
@@ -433,6 +436,7 @@
 				F550D4EC1E77C95000F8FBA5 /* FirstFormVC.swift in Sources */,
 				F55ACAC01E7C617600871048 /* MyParentClass.swift in Sources */,
 				F552AFAA1E642EDB007E73C0 /* ViewController.swift in Sources */,
+				F5C682A61E812580006877EF /* optionTableViewController.swift in Sources */,
 				F552AFA81E642EDB007E73C0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -280,6 +280,7 @@ class optionVC: UITableViewController, UIImagePickerControllerDelegate, UINaviga
         let mediaTypes = UIImagePickerController.availableMediaTypes(for: sourceType)!
         if UIImagePickerController.isSourceTypeAvailable(sourceType) && mediaTypes.count > 0 {
             let picker = UIImagePickerController()
+            //picker.cameraDevice = UIImagePickerControllerCameraDevice.front
             picker.mediaTypes = mediaTypes
             picker.delegate = self
             picker.allowsEditing = true

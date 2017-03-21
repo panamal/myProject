@@ -135,8 +135,8 @@ class ConnectToServer {
 var connectToServer = ConnectToServer()
 //var moviePlayerController:MPMoviePlayerController?
 var image:UIImage?
-var movieURL:NSURL?
-var lastChosenMediaType:String?
+//var movieURL:NSURL?
+//var lastChosenMediaType:String?
 var currentImage = 0
 
 class MyLocation {
@@ -416,22 +416,26 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate, UI
             } else if currentImage == 3 {
                 img3.image = (image != nil) ? image! : UIImage()
             }
+            currentImage = 0
+            image = nil
         }
         
-
         if connectToServer.checkConn() {
             lblStatus.backgroundColor = UIColor.green
             lblStatus.text = "Connection established!"
             lblStatus.tag = 1
         } else {
+            /*
             let alertMessage = UIAlertController(title: "Connection failed", message: connectToServer.getErr(), preferredStyle: UIAlertControllerStyle.alert)
             let alertActionOk = UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: nil)
             alertMessage.addAction(alertActionOk)
             self.present(alertMessage, animated: true, completion: nil)
+            */
             lblStatus.backgroundColor = UIColor.red
             lblStatus.text = "No connection!"
             lblStatus.tag = 0
         }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -441,11 +445,12 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate, UI
     
     func pickMediaFromSource(sourceType: UIImagePickerControllerSourceType){
         let mediaTypes = UIImagePickerController.availableMediaTypes(for: sourceType)!
+        //print(mediaTypes)
         if UIImagePickerController.isSourceTypeAvailable(sourceType) && mediaTypes.count > 0 {
             let picker = UIImagePickerController()
             picker.mediaTypes = mediaTypes
             picker.delegate = self
-            picker.allowsEditing = true
+            picker.allowsEditing = false
             picker.sourceType = sourceType
             present(picker, animated: true, completion: nil)
         } else {
@@ -458,6 +463,7 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate, UI
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        /*
         lastChosenMediaType = info[UIImagePickerControllerMediaType] as? String!
         if let mediaType = lastChosenMediaType {
             if mediaType == (kUTTypeImage as NSString) as String {
@@ -465,6 +471,11 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate, UI
             } else if mediaType == (kUTTypeMovie as NSString) as String {
                 movieURL = info[UIImagePickerControllerMediaURL] as? NSURL
             }
+        }
+        picker.dismiss(animated: true, completion: nil)
+        */
+        if let newimage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            image = newimage
         }
         picker.dismiss(animated: true, completion: nil)
     }
