@@ -1,5 +1,5 @@
 //
-//  optionTableViewController.swift
+//  ProgrammSettingsTVC.swift
 //  myProject
 //
 //  Created by student05 on 21.03.17.
@@ -8,13 +8,40 @@
 
 import UIKit
 
-class optionTableViewController: UITableViewController {
+class ProgrammSettingsTVC: UITableViewController {
 
-    @IBOutlet weak var setServerCell: UITableViewCell!
-    
+    @IBOutlet weak var txtServer: UITextField!
+    @IBOutlet weak var txtUserNick: UITextField!
+    @IBOutlet weak var txtUserName: UITextField!
+    @IBOutlet weak var txtPhoneNumber: UITextField!
+    @IBOutlet weak var imgUserAvatar: UIImageView!
+    @IBOutlet weak var chImageSourse: UISegmentedControl!
+    @IBOutlet weak var chCameraType: UISegmentedControl!
+    @IBOutlet weak var btnImageSet: UIButton!
+    @IBOutlet weak var btnToolBar: UIToolbar!
+    @IBOutlet weak var btnToolBarCheck: UIBarButtonItem!
+    @IBOutlet weak var btnToolBarApply: UIBarButtonItem!
+    @IBOutlet weak var btnToolBarSave: UIBarButtonItem!
+
+    @IBAction func chImageSourseChange(_ sender: UISegmentedControl) {
+        chCameraType.isHidden = sender.selectedSegmentIndex == 0 ? false : true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if chImageSourse.selectedSegmentIndex == 0 {
+            chCameraType.isHidden = false
+        } else {
+            chCameraType.isHidden = true
+        }
+        imgUserAvatar.layer.borderColor = UIColor.gray.cgColor
+        imgUserAvatar.layer.borderWidth = 1
+        imgUserAvatar.layer.cornerRadius = 5
+        
+        //btnImageSet.tintColor = chImageSourse.tintColor
+        btnImageSet.layer.borderColor = chImageSourse.tintColor.cgColor
+        btnImageSet.layer.borderWidth = 1
+        btnImageSet.layer.cornerRadius = 5
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -29,7 +56,6 @@ class optionTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     /*
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections

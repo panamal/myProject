@@ -369,8 +369,8 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate, UI
         cell2.backgroundColor = self.tableView.backgroundColor
         cell3.backgroundColor = self.tableView.backgroundColor
         cellBtn.backgroundColor = self.tableView.backgroundColor
-        btnFavorites.tintColor = UIColor.white
-        btnAllUser.tintColor = UIColor.white
+        //btnFavorites.tintColor = UIColor.white
+        //btnAllUser.tintColor = UIColor.white
         
         txtAddress.layer.borderWidth = 1
         txtAddress.layer.borderColor = UIColor.gray.cgColor
